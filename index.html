@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Thiếp Web - Nguyễn Lâm Quỳnh Dương</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tải Google Fonts: Be Vietnam Pro & Nunito hỗ trợ tiếng Việt mượt mà, trẻ trung -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Tải Font Awesome cho các biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-[#FFF7F9] via-[#F5FAFF] to-[#F0F7FF] text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 transition-colors duration-300 font-sans antialiased selection:bg-rose-400 selection:text-white">
+
+    <!-- Hộp thông báo (Toast Notification) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Thanh điều hướng (Navigation Bar) -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-rose-100/80 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Tên ngắn gọn -->
+                <a href="#" class="flex items-center gap-2.5 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-400 via-pink-400 to-sky-400 flex items-center justify-center text-white font-display font-bold text-lg shadow-md shadow-rose-200/70 dark:shadow-none group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span id="nav-brand-name" class="font-display font-extrabold text-sm sm:text-base bg-gradient-to-r from-rose-700 to-sky-700 dark:from-rose-200 dark:to-sky-200 bg-clip-text text-transparent truncate max-w-[175px] sm:max-w-none leading-tight">
+                            Nguyễn Lâm Quỳnh Dương
+                        </span>
+<span class="text-[11px] font-medium text-sky-600 dark:text-sky-400 hidden sm:inline">11 Toán 2 • THPT Chuyên Bến Tre</span>
+                    </div>
+                </a>
+
+                <!-- Menu Desktop -->
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <a href="#loi-chao" class="hover:text-rose-500 dark:hover:text-rose-300 transition-colors">Giới thiệu</a>
+                    <a href="#gioi-thieu" class="hover:text-rose-500 dark:hover:text-rose-300 transition-colors">Cá tính & Sở thích</a>
+                    <a href="#hoc-tap" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Góc học tập</a>
+                    <a href="#luu-but" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Lưu bút 11 Toán 2</a>
+                </nav>
+
+                <!-- Các nút chức năng -->
+                <div class="flex items-center gap-2">
+                    <button onclick="sharePortfolio()" title="Chia sẻ danh thiếp" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-rose-50 hover:bg-rose-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-rose-600 dark:text-rose-300 transition-colors">
+                        <i class="fa-solid fa-share-nodes text-sm"></i>
+                    </button>
+
+                    <button onclick="openEditModal()" class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-rose-100/90 to-sky-100/90 text-slate-800 hover:from-rose-200/80 hover:to-sky-200/80 dark:from-rose-500/20 dark:to-sky-500/20 dark:text-slate-100 transition-all shadow-sm">
+                        <i class="fa-solid fa-pen-to-square text-rose-500 dark:text-rose-300"></i>
+                        <span class="hidden sm:inline">Chỉnh sửa thông tin</span>
+                        <span class="sm:hidden">Sửa</span>
+                    </button>
+
+                    <button id="theme-toggle" aria-label="Chuyển đổi chế độ Sáng/Tối" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center bg-sky-50 hover:bg-sky-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-sky-700 dark:text-amber-300 transition-colors">
+                        <i id="theme-icon" class="fa-solid fa-moon text-sm sm:text-base"></i>
+                    </button>
+
+                    <!-- Nút mở menu trên Mobile -->
+                    <button id="mobile-menu-btn" aria-label="Mở menu" class="md:hidden w-9 h-9 rounded-xl flex items-center justify-center bg-rose-50 dark:bg-slate-800 text-rose-600 dark:text-slate-200">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile thả xuống -->
+<div id="mobile-menu" class="hidden md:hidden border-t border-rose-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-2 pb-4 space-y-1">
+            <a href="#loi-chao" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800">Giới thiệu</a>
+            <a href="#gioi-thieu" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800">Cá tính & Sở thích</a>
+            <a href="#hoc-tap" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Góc học tập</a>
+            <a href="#luu-but" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-xl text-base font-medium hover:bg-sky-50 dark:hover:bg-slate-800">Lưu bút 11 Toán 2</a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-14 sm:space-y-16">
+
+        <!-- 1. THẺ HERO GIỚI THIỆU (HỒNG ĐÀO PASTEL KẾT HỢP XANH DƯƠNG BẢO BÌNH) -->
+        <section id="loi-chao" class="scroll-mt-24 relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#FFE4EC] via-[#F8FAFC] to-[#E0F2FE] dark:from-slate-800 dark:via-slate-800/95 dark:to-sky-950/60 p-6 sm:p-10 lg:p-12 border border-rose-200/70 dark:border-slate-700/80 shadow-xl shadow-rose-500/5">
+            <!-- Họa tiết trang trí nền pastel -->
+            <div class="absolute -top-24 -left-24 w-72 h-72 bg-rose-300/30 dark:bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-72 h-72 bg-sky-300/35 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12">
+                <!-- Cột nội dung chào hỏi -->
+                <div class="flex-1 text-center lg:text-left space-y-5">
+                    <!-- Huy hiệu lớp & chức vụ -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 dark:bg-slate-900/80 backdrop-blur-sm border border-sky-200 dark:border-slate-700 text-sky-800 dark:text-sky-300 text-xs sm:text-sm font-semibold shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                            <span id="display-class">Lớp 11 Toán 2 – Trường THPT Chuyên Bến Tre</span>
+                        </span>
+                        <span id="display-role-badge" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-rose-500 to-sky-500 text-white text-xs sm:text-sm font-semibold shadow-sm">
+<i class="fa-solid fa-feather-pointed text-amber-200"></i>
+                            <span>Cán sự Văn (11 Toán 2)</span>
+                        </span>
+                    </div>
+
+                    <h1 class="font-display text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                        Kính chào thầy cô và các bạn! Em/mình là <span id="display-name" class="bg-gradient-to-r from-rose-500 via-pink-500 to-sky-600 dark:from-rose-300 dark:via-pink-300 dark:to-sky-300 bg-clip-text text-transparent">Nguyễn Lâm Quỳnh Dương</span>
+                    </h1>
+
+                    <!-- Thông tin ngày sinh & cung hoàng đạo -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm border border-rose-200/70 dark:border-slate-700">
+                            <i class="fa-solid fa-cake-candles text-rose-500"></i>
+                            <span id="display-birthday">31/01/2010</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm border border-sky-200/70 dark:border-slate-700">
+                            <span>♒</span>
+                            <span id="display-zodiac">Cung Bảo Bình (Aquarius)</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm border border-teal-200/70 dark:border-slate-700">
+                            <i class="fa-solid fa-shield-halved text-teal-600 dark:text-teal-400"></i>
+                            <span>Danh thiếp an toàn lớp học</span>
+                        </span>
+                    </div>
+
+                    <!-- Khung Lời nhắn gửi thầy cô và các bạn -->
+                    <div class="bg-white/85 dark:bg-slate-900/75 backdrop-blur-md rounded-2xl p-4 sm:p-5 border-l-4 border-rose-400 shadow-sm max-w-2xl mx-auto lg:mx-0 flex items-start gap-3.5 text-left">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-100 to-sky-100 dark:from-rose-500/20 dark:to-sky-500/20 text-rose-500 dark:text-rose-300 flex items-center justify-center shrink-0 text-lg mt-0.5">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] uppercase tracking-wider font-bold text-rose-500 dark:text-rose-300">Lời nhắn gửi thầy cô và tập thể 11 Toán 2</p>
+<p class="text-slate-700 dark:text-slate-200 text-sm sm:text-base mt-1 leading-relaxed italic">
+                                "<span id="display-quote">Em xin gửi lời chào trân trọng nhất đến quý thầy cô và lời chúc thật nhiều niềm vui đến các bạn lớp 11 Toán 2. Mong rằng chúng ta sẽ luôn gắn kết, học tập thật tốt và cùng nhau lưu giữ thật nhiều kỷ niệm thanh xuân rực rỡ dưới mái trường THPT Chuyên Bến Tre!</span>"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Các nút hành động nhanh -->
+                    <div class="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
+                        <a href="#luu-but" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-rose-400 via-pink-500 to-sky-500 hover:from-rose-500 hover:to-sky-600 text-white font-semibold text-sm sm:text-base shadow-lg shadow-rose-300/30 dark:shadow-none hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Gửi lưu bút cho Dương</span>
+                        </a>
+                        <a href="#hoc-tap" class="px-6 py-3 rounded-2xl bg-white/90 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm sm:text-base border border-sky-200 dark:border-slate-700 shadow-sm hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-book-open text-sky-500"></i>
+                            <span>Góc học tập 11T2</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cột Ảnh đại diện SVG nữ sinh tóc dài dễ thương -->
+                <div class="relative group shrink-0">
+                    <div class="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full p-2 bg-gradient-to-tr from-rose-300 via-pink-200 to-sky-300 shadow-xl shadow-rose-200/50 dark:shadow-none">
+                        <div id="avatar-wrapper" class="w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-[#FFE4EC] to-[#E0F2FE] dark:bg-slate-800 relative flex items-center justify-center">
+                            <!-- Ảnh tải lên tùy chỉnh -->
+<img
+    id="display-avatar-img"
+    src="https://raw.githubusercontent.com/nguyenthanhdat201201000-max/danhthiepquynhduong/main/avatarqd.jpg"
+    alt="Ảnh đại diện Nguyễn Lâm Quỳnh Dương"
+    class="w-full h-full object-cover rounded-full transition-transform"
+>
+                            
+                            <!-- Ảnh minh họa SVG nữ sinh tóc dài tươi tắn, dễ thương -->
+                            <svg id="default-female-svg" viewBox="0 0 240 240" class="hidden w-full h-full transition-transform duration-500 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minh họa nữ sinh Nguyễn Lâm Quỳnh Dương">
+<defs>
+                                    <linearGradient id="bgPastel" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FFE4EC"/>
+                                        <stop offset="55%" stop-color="#F8FAFC"/>
+                                        <stop offset="100%" stop-color="#E0F2FE"/>
+                                    </linearGradient>
+                                    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stop-color="#2D3748"/>
+                                        <stop offset="100%" stop-color="#1A202C"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Nền tròn hồng đào - xanh pastel -->
+                                <rect width="240" height="240" fill="url(#bgPastel)"/>
+                                <!-- Họa tiết lấp lánh nhẹ -->
+                                <circle cx="44" cy="56" r="5" fill="#F9A8D4" opacity="0.75"/>
+                                <circle cx="196" cy="64" r="6.5" fill="#7DD3FC" opacity="0.75"/>
+                                <circle cx="190" cy="142" r="4" fill="#FDA4AF" opacity="0.7"/>
+                                <circle cx="46" cy="148" r="4.5" fill="#93C5FD" opacity="0.7"/>
+                                
+                                <!-- Mái tóc dài suôn mượt phía sau -->
+                                <path d="M56 102 C48 152, 52 204, 68 232 L172 232 C188 204, 192 152, 184 102 Z" fill="url(#hairGrad)"/>
+                                
+                                <!-- Áo đồng phục nữ sinh trắng tinh khôi cổ xanh pastel -->
+                                <path d="M52 240 C55 190, 82 174, 120 174 C158 174, 185 190, 188 240 Z" fill="#FFFFFF"/>
+                                <!-- Cổ áo thủy thủ xanh dương dịu -->
+                                <path d="M84 176 L120 206 L156 176 L144 168 L120 188 L96 168 Z" fill="#93C5FD"/>
+                                <path d="M90 175 L120 201 L150 175" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+                                <!-- Nơ cổ áo hồng đào dễ thương -->
+                                <path d="M120 198 L105 191 L107 205 Z" fill="#F472B6"/>
+                                <path d="M120 198 L135 191 L133 205 Z" fill="#F472B6"/>
+                                <circle cx="120" cy="198" r="4" fill="#FBCFE8"/>
+
+                                <!-- Cổ -->
+                                <rect x="108" y="150" width="24" height="30" rx="10" fill="#FDE6D8"/>
+                                <path d="M108 156 Q120 166 132 156 L132 165 Q120 172 108 165 Z" fill="#F5D0BA"/>
+
+                                <!-- Khuôn mặt nữ sinh tròn trịa tươi tắn -->
+<path d="M76 106 C76 74, 94 58, 120 58 C146 58, 164 74, 164 106 C164 139, 145 159, 120 159 C95 159, 76 139, 76 106 Z" fill="#FDE6D8"/>
+                                
+                                <!-- Má hồng đào nhẹ nhàng -->
+                                <ellipse cx="92" cy="124" rx="9" ry="5" fill="#FDA4AF" opacity="0.6"/>
+                                <ellipse cx="148" cy="124" rx="9" ry="5" fill="#FDA4AF" opacity="0.6"/>
+
+                                <!-- Đôi mắt to tròn long lanh -->
+                                <circle cx="99" cy="110" r="6.5" fill="#1E293B"/>
+                                <circle cx="141" cy="110" r="6.5" fill="#1E293B"/>
+                                <circle cx="101" cy="108" r="2.2" fill="#FFFFFF"/>
+                                <circle cx="143" cy="108" r="2.2" fill="#FFFFFF"/>
+                                <!-- Lông mày thanh mảnh -->
+                                <path d="M90 98 Q99 94 107 98" fill="none" stroke="#334155" stroke-width="2.2" stroke-linecap="round"/>
+                                <path d="M133 98 Q141 94 150 98" fill="none" stroke="#334155" stroke-width="2.2" stroke-linecap="round"/>
+
+                                <!-- Nụ cười rạng rỡ, thân thiện -->
+                                <path d="M109 131 Q120 142 131 131" fill="none" stroke="#E11D48" stroke-width="2.8" stroke-linecap="round"/>
+
+                                <!-- Tóc mái & lọn tóc ôm khuôn mặt -->
+                                <path d="M72 106 C70 66, 92 46, 120 46 C148 46, 170 66, 168 106 C164 88, 154 78, 145 74 C138 86, 126 91, 114 91 C102 91, 92 84, 86 74 C78 80, 74 90, 72 106 Z" fill="url(#hairGrad)"/>
+                                <path d="M102 68 Q112 88 122 89" fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Kẹp tóc ngôi sao pastel -->
+                                <polygon points="84,82 86,87 91,87 87,90 88,95 84,92 80,95 81,90 77,87 82,87" fill="#F472B6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Nút đổi ảnh nhanh -->
+                    <button onclick="openEditModal()" title="Tải ảnh đại diện từ máy" class="absolute bottom-2 right-2 w-11 h-11 rounded-full bg-white dark:bg-slate-800 text-rose-500 dark:text-rose-300 shadow-lg border border-rose-100 dark:border-slate-700 flex items-center justify-center hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. BENTO GRID: CÁ TÍNH, TỰ BẠCH & SỞ THÍCH -->
+        <section id="gioi-thieu" class="scroll-mt-24 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+<span class="text-xs font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400">Chân dung Bảo Bình 31/01</span>
+                    <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Cá Tính & Sở Thích</h2>
+                </div>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Đôi nét về Quỳnh Dương trong mắt thầy cô và bạn bè</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Thẻ Lời tự bạch & Tính cách (7 cột) -->
+                <div class="lg:col-span-7 bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-rose-100/80 dark:border-slate-700/70 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-rose-100 dark:bg-rose-500/20 text-rose-500 dark:text-rose-300 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-face-smile-beam"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-xl font-bold">Tính Cách Nổi Bật</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Luôn sẵn sàng lắng nghe và hỗ trợ bạn bè</p>
+                            </div>
+                        </div>
+                        <p id="display-bio" class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
+                            Em/mình là Nguyễn Lâm Quỳnh Dương, sinh ngày 31/01/2010 (cung Bảo Bình), hiện đang học lớp 11 Toán 2 – Trường THPT Chuyên Bến Tre. Mình là một cô gái vui vẻ, hòa đồng và thân thiện, luôn sẵn sàng lắng nghe cũng như hỗ trợ các bạn trong học tập lẫn các hoạt động chung của lớp.
+                        </p>
+                    </div>
+
+                    <!-- 4 Thẻ tính cách chính -->
+                    <div id="display-personality-tags" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                        <div class="p-3 rounded-2xl bg-[#FFE4EC]/80 dark:bg-rose-950/40 border border-rose-200/70 dark:border-rose-800/50 text-center space-y-1">
+                            <span class="text-xl block">😄</span>
+                            <p class="font-display font-bold text-xs sm:text-sm text-rose-900 dark:text-rose-200">Vui vẻ</p>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-[#E0F2FE]/80 dark:bg-sky-950/40 border border-sky-200/70 dark:border-sky-800/50 text-center space-y-1">
+                            <span class="text-xl block">🤝</span>
+                            <p class="font-display font-bold text-xs sm:text-sm text-sky-900 dark:text-sky-200">Hòa đồng</p>
+</div>
+                        <div class="p-3 rounded-2xl bg-[#F3E8FF]/80 dark:bg-purple-950/40 border border-purple-200/70 dark:border-purple-800/50 text-center space-y-1">
+                            <span class="text-xl block">🌸</span>
+                            <p class="font-display font-bold text-xs sm:text-sm text-purple-900 dark:text-purple-200">Thân thiện</p>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-[#CCFBF1]/80 dark:bg-teal-950/40 border border-teal-200/70 dark:border-teal-800/50 text-center space-y-1">
+                            <span class="text-xl block">👂</span>
+                            <p class="font-display font-bold text-xs sm:text-sm text-teal-900 dark:text-teal-200">Lắng nghe</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thẻ Sở thích lúc rảnh rỗi (5 cột) -->
+                <div class="lg:col-span-5 bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-sky-100/80 dark:border-slate-700/70 shadow-sm space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-sky-100 dark:bg-sky-500/20 text-sky-600 dark:text-sky-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-sparkles"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-xl font-bold">Sở Thích Cá Nhân</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Những niềm vui nhỏ sau giờ lên lớp</p>
+                        </div>
+                    </div>
+
+                    <div id="display-hobbies-list" class="space-y-3">
+                        <!-- Sở thích 1: Đọc sách -->
+                        <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-rose-50/70 dark:bg-slate-900/60 border border-rose-100 dark:border-slate-700/60 hover:translate-x-1 transition-transform">
+                            <div class="w-10 h-10 rounded-xl bg-rose-200/70 dark:bg-rose-500/20 text-rose-600 dark:text-rose-300 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">Đọc sách</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Văn học, tản văn nhẹ nhàng và sách khám phá</p>
+                            </div>
+                        </div>
+
+                        <!-- Sở thích 2: Xem phim -->
+<div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-sky-50/70 dark:bg-slate-900/60 border border-sky-100 dark:border-slate-700/60 hover:translate-x-1 transition-transform">
+                            <div class="w-10 h-10 rounded-xl bg-sky-200/70 dark:bg-sky-500/20 text-sky-600 dark:text-sky-300 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">Xem phim</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Thư giãn cuối tuần với những câu chuyện ý nghĩa</p>
+                            </div>
+                        </div>
+
+                        <!-- Sở thích 3: Đi dạo -->
+                        <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-slate-900/60 border border-indigo-100 dark:border-slate-700/60 hover:translate-x-1 transition-transform">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-200/70 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-person-walking"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-display font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">Đi dạo thư giãn</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Tận hưởng không khí mát lành dịp cuối tuần</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. GÓC HỌC TẬP & THẾ MẠNH (4 THẺ CÂN ĐỐI) -->
+        <section id="hoc-tap" class="scroll-mt-24 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Hành trang Chuyên Bến Tre</span>
+                    <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Góc Học Tập & Thế Mạnh</h2>
+                </div>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Kết hợp hài hòa giữa tư duy Toán - Lí và tâm hồn Ngữ văn</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Thẻ 1: Học sinh Chuyên Toán -->
+                <div class="bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 border border-sky-100 dark:border-slate-700/70 shadow-sm space-y-3.5 hover:-translate-y-1 transition-transform">
+<div class="w-12 h-12 rounded-2xl bg-sky-100 dark:bg-sky-500/20 text-sky-600 dark:text-sky-300 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-square-root-variable"></i>
+                    </div>
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300 mb-1.5">Môn Chuyên</span>
+                        <h3 class="font-display text-lg font-bold">Chuyên Toán 11T2</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                            Rèn luyện tư duy logic, lập luận chặt chẽ và niềm vui khi chinh phục những bài toán hay cùng các bạn lớp 11 Toán 2.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Thẻ 2: Yêu thích môn Vật lí -->
+                <div class="bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 border border-indigo-100 dark:border-slate-700/70 shadow-sm space-y-3.5 hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-atom"></i>
+                    </div>
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300 mb-1.5">Đam Mê Tự Nhiên</span>
+                        <h3 class="font-display text-lg font-bold">Yêu Thích Môn Vật Lí</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                            Hứng thú khám phá các hiện tượng tự nhiên, quy luật vận hành của thế giới xung quanh qua từng tiết học Vật lí.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Thẻ 3: Cán sự Văn của lớp -->
+                <div class="bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 border border-rose-100 dark:border-slate-700/70 shadow-sm space-y-3.5 hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-100 dark:bg-rose-500/20 text-rose-500 dark:text-rose-300 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-feather-pointed"></i>
+                    </div>
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300 mb-1.5">Trách Nhiệm Lớp</span>
+                        <h3 class="font-display text-lg font-bold">Cán Sự Văn 11 Toán 2</h3>
+<p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                            Là nhịp cầu kết nối giữa thầy cô bộ môn Ngữ văn và tập thể lớp, luôn chu đáo hỗ trợ bài vở cho các bạn.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Thẻ 4: Mục tiêu năm học -->
+                <div class="bg-gradient-to-br from-rose-400 via-pink-500 to-sky-500 dark:from-rose-900/90 dark:to-sky-900/90 text-white rounded-3xl p-6 shadow-lg shadow-rose-200/50 dark:shadow-none flex flex-col justify-between space-y-3.5 hover:-translate-y-1 transition-transform">
+                    <div class="space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <span class="inline-block px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-white/20 text-white mb-1.5">Mục Tiêu Năm Học</span>
+                            <h3 class="font-display text-lg font-bold">Học Đều Tất Cả Các Môn</h3>
+                            <p id="display-goal" class="text-xs sm:text-sm text-white/95 mt-2 leading-relaxed">
+                                Học đều tất cả các môn học, giữ tinh thần tích cực và gắn kết bền chặt cùng tập thể 11 Toán 2.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-white/20 flex items-center justify-between text-[11px] text-white/90">
+                        <span>THPT Chuyên Bến Tre</span>
+                        <span class="font-bold">11 Toán 2</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. THẺ KẾT NỐI AN TOÀN & BẢNG LƯU BÚT 11 TOÁN 2 -->
+        <section id="luu-but" class="scroll-mt-24 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400">Gắn kết lớp học</span>
+                    <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Kết Nối An Toàn & Lưu Bút 11 Toán 2</h2>
+                </div>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">Dành riêng cho quý thầy cô và các bạn cùng lớp</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Cột trái: Thẻ Kết nối an toàn cho học sinh (5 cột) -->
+                <div id="bao-mat" class="scroll-mt-24 lg:col-span-5 bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-sky-100 dark:border-slate-700/70 shadow-sm space-y-5">
+<div class="flex items-center justify-between">
+                        <h3 class="font-display text-xl font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-shield-heart text-rose-500"></i>
+                            <span>Thông Tin Lớp Học</span>
+                        </h3>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-50 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300 border border-sky-200/70 dark:border-sky-700/50">
+                            <i class="fa-solid fa-lock text-[10px]"></i>
+                            <span>An toàn học sinh</span>
+                        </span>
+                    </div>
+
+                    <!-- Box hiển thị thông tin lớp & họ tên -->
+                    <div class="p-4 rounded-2xl bg-gradient-to-r from-[#FFE4EC]/80 via-white to-[#E0F2FE]/80 dark:from-slate-900 dark:to-slate-900/80 border border-rose-200/60 dark:border-slate-700 space-y-3.5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-xl bg-white dark:bg-slate-800 text-sky-600 dark:text-sky-300 flex items-center justify-center text-lg shadow-sm shrink-0">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-rose-600 dark:text-rose-300 font-semibold">Học sinh & Đơn vị lớp</p>
+                                <p id="display-privacy-class" class="font-display font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">Nguyễn Lâm Quỳnh Dương • Lớp 11 Toán 2 – THPT Chuyên Bến Tre</p>
+                            </div>
+                        </div>
+
+                        <button onclick="copyText('display-privacy-class', 'Đã sao chép thông tin lớp & họ tên để kết nối trên nhóm lớp!')" class="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-rose-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold border border-rose-200/80 dark:border-slate-600 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-regular fa-copy text-rose-500"></i>
+                            <span>Sao chép thông tin lớp & họ tên</span>
+                        </button>
+                    </div>
+
+                    <!-- Ghi chú bảo mật thông tin cá nhân -->
+                    <div class="p-4 rounded-2xl bg-slate-50/90 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-700/60 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">
+                        <p class="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-sky-500"></i>
+<span>Bảo vệ quyền riêng tư học sinh</span>
+                        </p>
+                        <p>
+                            Trang web không công khai số điện thoại cá nhân để đảm bảo an toàn trực tuyến. Quý thầy cô và các bạn lớp <strong>11 Toán 2 - THPT Chuyên Bến Tre</strong> có thể kết nối qua nhóm lớp hoặc để lại lời nhắn trực tiếp tại bảng lưu bút nhé!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Bảng Lưu Bút Tương Tác 11 Toán 2 (7 cột) -->
+                <div class="lg:col-span-7 bg-white/85 dark:bg-slate-800/85 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-rose-100 dark:border-slate-700/70 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-display text-xl font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-note-sticky text-sky-500"></i>
+                            <span>Lưu Bút 11 Toán 2</span>
+                        </h3>
+                        <span id="guestbook-count" class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-200">
+                            3 lời nhắn
+                        </span>
+                    </div>
+
+                    <!-- Form nhập lời nhắn mới -->
+                    <form id="guestbook-form" class="space-y-3 bg-gradient-to-r from-rose-50/70 to-sky-50/70 dark:bg-slate-900/60 p-4 rounded-2xl border border-rose-100/80 dark:border-slate-700/60">
+                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                            <select id="guest-role" aria-label="Chọn vai trò" class="sm:col-span-4 px-3 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-rose-200/70 dark:border-slate-700 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-rose-400">
+                                <option value="Bạn cùng lớp">🎓 Bạn cùng lớp</option>
+                                <option value="Thầy / Cô">👩‍🏫 Thầy / Cô</option>
+                                <option value="Bạn bè">🌸 Bạn bè</option>
+                            </select>
+                            <input type="text" id="guest-name" required placeholder="Nhập tên của bạn hoặc Thầy/Cô..." 
+                                   class="sm:col-span-5 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-rose-200/70 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-400">
+                            <select id="guest-emoji" aria-label="Chọn biểu tượng cảm xúc" class="sm:col-span-3 px-3 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-sky-200/70 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-400">
+                                <option value="💖">💖 Quý mến</option>
+<option value="🌟">🌟 Tỏa sáng</option>
+                                <option value="📚">📚 Chăm học</option>
+                                <option value="😄">😄 Vui vẻ</option>
+                                <option value="♒">♒ Bảo Bình</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-2.5">
+                            <input type="text" id="guest-message" required placeholder="Viết lời chúc hoặc lời nhắn gửi Quỳnh Dương..." 
+                                   class="flex-1 px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-sky-200/70 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-400">
+                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-400 to-sky-500 hover:from-rose-500 hover:to-sky-600 text-white font-semibold text-xs sm:text-sm shadow-md shadow-rose-200/50 dark:shadow-none transition-all flex items-center justify-center gap-2 shrink-0">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Gửi lưu bút</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Danh sách các tờ giấy note -->
+                    <div id="guestbook-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-h-96 overflow-y-auto pr-1">
+                        <!-- Render từ JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-rose-100/80 dark:border-slate-800 mt-14 py-8 text-center text-sm text-slate-500 dark:text-slate-400">
+        <div class="max-w-6xl mx-auto px-4 space-y-1.5">
+            <p>Danh thiếp học sinh của <strong class="text-slate-800 dark:text-slate-200">Nguyễn Lâm Quỳnh Dương</strong> • Lớp 11 Toán 2 – Trường THPT Chuyên Bến Tre</p>
+            <p class="text-xs text-rose-500 dark:text-rose-300">Cán sự Văn • Bảo Bình 31/01/2010 • Học đều tất cả các môn học</p>
+        </div>
+    </footer>
+
+    <!-- MODAL CHỈNH SỬA THÔNG TIN CÁ NHÂN TRỰC TIẾP -->
+    <div id="edit-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl border border-rose-100 dark:border-slate-700 overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Header Modal -->
+            <div class="px-6 py-4 border-b border-rose-100 dark:border-slate-700 flex items-center justify-between bg-gradient-to-r from-[#FFE4EC]/70 to-[#E0F2FE]/70 dark:from-slate-900 dark:to-slate-900/50">
+                <div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-gradient-to-r from-rose-400 to-sky-500 text-white flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-user-pen"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Chỉnh Sửa Danh Thiếp Cá Nhân</h3>
+                </div>
+                <button onclick="closeEditModal()" class="w-8 h-8 rounded-full hover:bg-rose-100 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Nội dung Form chỉnh sửa -->
+            <form id="profile-edit-form" class="p-6 overflow-y-auto space-y-4 text-sm">
+                <!-- Tải ảnh đại diện từ máy tính -->
+                <div class="p-4 rounded-2xl bg-rose-50/60 dark:bg-slate-900/60 border border-dashed border-rose-300 dark:border-rose-700 flex flex-col sm:flex-row items-center gap-4">
+                    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-rose-400 bg-white flex items-center justify-center shrink-0">
+                        <img id="preview-avatar" src="" alt="Xem trước ảnh" class="hidden w-full h-full object-cover">
+                        <i id="preview-avatar-icon" class="fa-solid fa-user-graduate text-2xl text-rose-400"></i>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left space-y-1">
+                        <label class="font-semibold text-slate-800 dark:text-slate-200 block">Đổi ảnh đại diện từ thiết bị (Tùy chọn)</label>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Mặc định đang dùng ảnh minh họa nữ sinh tóc dài pastel. Bạn có thể chọn ảnh cá nhân từ máy lên.</p>
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
+                            <input type="file" id="input-avatar-file" accept="image/*" class="text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-100 file:text-rose-700 hover:file:bg-rose-200 cursor-pointer">
+                            <button type="button" onclick="useDefaultSvgAvatar()" class="text-xs font-semibold text-sky-600 hover:underline">Dùng lại ảnh SVG</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold mb-1">Họ và tên</label>
+                        <input type="text" id="input-name" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-rose-400 focus:outline-none">
+                    </div>
+<div>
+                        <label class="block font-semibold mb-1">Chức vụ lớp</label>
+                        <input type="text" id="input-role-badge" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-rose-400 focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold mb-1">Lớp & Trường</label>
+                        <input type="text" id="input-class" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Ngày sinh</label>
+                        <input type="text" id="input-birthday" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold mb-1">Lời nhắn gửi thầy cô và các bạn</label>
+                    <textarea id="input-quote" rows="2" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-rose-400 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold mb-1">Giới thiệu tính cách bản thân</label>
+                    <textarea id="input-bio" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-rose-400 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold mb-1">Mục tiêu năm học</label>
+                    <input type="text" id="input-goal" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-sky-400 focus:outline-none">
+                </div>
+            </form>
+
+            <!-- Footer Modal -->
+            <div class="px-6 py-4 border-t border-rose-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex flex-wrap items-center justify-between gap-3">
+                <button type="button" onclick="resetDefaultData()" class="px-4 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors">
+                    Khôi phục mặc định
+                </button>
+                <div class="flex items-center gap-2.5">
+<button type="button" onclick="closeEditModal()" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+                        Hủy bỏ
+                    </button>
+                    <button type="button" onclick="saveProfileChanges()" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-rose-400 to-sky-500 hover:from-rose-500 hover:to-sky-600 text-white shadow-md transition-colors">
+                        Lưu thay đổi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. DỮ LIỆU CHÍNH THỨC CỦA NGUYỄN LÂM QUỲNH DƯƠNG
+        // ==========================================
+        const DEFAULT_PROFILE = {
+            name: "Nguyễn Lâm Quỳnh Dương",
+            roleBadge: "Cán sự Văn (11 Toán 2)",
+            className: "Lớp 11 Toán 2 – Trường THPT Chuyên Bến Tre",
+            privacyClass: "Nguyễn Lâm Quỳnh Dương • Lớp 11 Toán 2 – THPT Chuyên Bến Tre",
+            birthday: "31/01/2010",
+            zodiac: "Cung Bảo Bình (Aquarius)",
+            quote: "Em xin gửi lời chào trân trọng nhất đến quý thầy cô và lời chúc thật nhiều niềm vui đến các bạn lớp 11 Toán 2. Mong rằng chúng ta sẽ luôn gắn kết, học tập thật tốt và cùng nhau lưu giữ thật nhiều kỷ niệm thanh xuân rực rỡ dưới mái trường THPT Chuyên Bến Tre!",
+            customAvatar: "",
+            bio: "Em/mình là Nguyễn Lâm Quỳnh Dương, sinh ngày 31/01/2010 (cung Bảo Bình), hiện đang học lớp 11 Toán 2 – Trường THPT Chuyên Bến Tre. Mình là một cô gái vui vẻ, hòa đồng và thân thiện, luôn sẵn sàng lắng nghe cũng như hỗ trợ các bạn trong học tập lẫn các hoạt động chung của lớp.",
+            goal: "Học đều tất cả các môn học, giữ tinh thần tích cực và gắn kết bền chặt cùng tập thể 11 Toán 2."
+        };
+
+        const DEFAULT_GUESTBOOK = [
+            {
+                id: 1,
+                role: "Thầy / Cô",
+                author: "Thầy / Cô Giáo Viên 11 Toán 2",
+                emoji: "🌟",
+                message: "Chúc Quỳnh Dương luôn giữ vững tinh thần vui vẻ, học đều tất cả các môn và hoàn thành xuất sắc vai trò Cán sự Văn của lớp 11 Toán 2 nhé!",
+                color: "rose",
+                date: "Hôm nay",
+                likes: 10
+            },
+            {
+                id: 2,
+                role: "Bạn cùng lớp",
+                author: "Tập thể Tổ 1 - 11 Toán 2",
+                emoji: "💖",
+                message: "Cảm ơn Cán sự Văn Quỳnh Dương lúc nào cũng thân thiện, hòa đồng và nhiệt tình giúp đỡ các bạn trong lớp nha!",
+                color: "sky",
+                date: "Hôm qua",
+                likes: 8
+            },
+            {
+                id: 3,
+                role: "Bạn bè",author: "Hội bạn cùng tiến Toán - Lí",
+                emoji: "♒",
+                message: "Chúc Bảo Bình 31/01 luôn rạng rỡ, chinh phục trọn vẹn cả Toán, Vật lí lẫn Ngữ văn trong năm học lớp 11 này!",
+                color: "purple",
+                date: "2 ngày trước",
+                likes: 7
+            }
+        ];
+
+        // Khóa lưu trữ riêng cho bản hoàn chỉnh
+        let currentProfile = JSON.parse(localStorage.getItem('quynh_duong_complete_v4')) || { ...DEFAULT_PROFILE };
+        let guestbookEntries = JSON.parse(localStorage.getItem('quynh_duong_guestbook_v4')) || [...DEFAULT_GUESTBOOK];
+        let tempUploadedAvatar = null;
+
+        // ==========================================
+        // 2. HIỂN THỊ DỮ LIỆU LÊN GIAO DIỆN (RENDER)
+        // ==========================================
+        function renderProfile() {
+            document.title = `Danh Thiếp Web - ${currentProfile.name} | 11 Toán 2`;
+            document.getElementById('nav-brand-name').textContent = currentProfile.name;
+            document.getElementById('display-name').textContent = currentProfile.name;
+            document.getElementById('display-class').textContent = currentProfile.className;
+            document.getElementById('display-privacy-class').textContent = currentProfile.privacyClass || `${currentProfile.name} • ${currentProfile.className}`;
+            document.getElementById('display-birthday').textContent = currentProfile.birthday;
+            document.getElementById('display-zodiac').textContent = currentProfile.zodiac;
+            document.getElementById('display-quote').textContent = currentProfile.quote;
+            document.getElementById('display-bio').textContent = currentProfile.bio;
+            document.getElementById('display-goal').textContent = currentProfile.goal;
+
+            const badgeSpan = document.querySelector('#display-role-badge span');
+            if (badgeSpan) badgeSpan.textContent = currentProfile.roleBadge;
+
+            // Xử lý hiển thị ảnh đại diện (SVG mặc định hoặc ảnh tải lên)
+            const imgEl = document.getElementById('display-avatar-img');
+            const svgEl = document.getElementById('default-female-svg');
+            if (currentProfile.customAvatar) {
+                imgEl.src = currentProfile.customAvatar;
+                imgEl.classList.remove('hidden');
+                svgEl.classList.add('hidden');
+            } else {
+                imgEl.classList.add('hidden');
+                svgEl.classList.remove('hidden');
+            }
+        }
+
+        function renderGuestbook() {
+            const listEl = document.getElementById('guestbook-list');
+            const countEl = document.getElementById('guestbook-count');
+            countEl.textContent = `${guestbookEntries.length} lời nhắn`;
+
+            const colorStyles = {rose: "bg-[#FFE4EC]/75 dark:bg-rose-950/35 border-rose-200/80 dark:border-rose-800/50 text-slate-800 dark:text-rose-100",
+                sky: "bg-[#E0F2FE]/80 dark:bg-sky-950/35 border-sky-200/80 dark:border-sky-800/50 text-slate-800 dark:text-sky-100",
+                purple: "bg-[#F3E8FF]/75 dark:bg-purple-950/35 border-purple-200/80 dark:border-purple-800/50 text-slate-800 dark:text-purple-100"
+            };
+
+            listEl.innerHTML = guestbookEntries.map(item => {
+                const style = colorStyles[item.color] || colorStyles.rose;
+                const roleBadge = item.role ? `<span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold bg-white/85 dark:bg-slate-800/85 text-rose-700 dark:text-rose-300">${escapeHTML(item.role)}</span>` : '';
+                return `
+                    <div class="p-4 rounded-2xl border ${style} shadow-sm flex flex-col justify-between gap-3 transition-transform hover:-translate-y-0.5">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-1.5">
+                                ${roleBadge}
+                                <span class="text-base" title="Cảm xúc">${escapeHTML(item.emoji || '💖')}</span>
+                            </div>
+                            <p class="text-xs sm:text-sm leading-relaxed">"${escapeHTML(item.message)}"</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-900/5 dark:border-white/10 text-xs">
+                            <div>
+                                <p class="font-bold text-slate-900 dark:text-white">${escapeHTML(item.author)}</p>
+                                <p class="text-[11px] opacity-70">${escapeHTML(item.date)}</p>
+                            </div>
+                            <button onclick="likeGuestbookEntry(${item.id})" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-slate-800 hover:scale-105 transition-transform text-rose-500 dark:text-rose-300 font-bold shadow-sm">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>${item.likes || 0}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==========================================
+        // 3. TƯƠNG TÁC LƯU BÚT & THẢ CẢM XÚC
+        // ==========================================
+        document.getElementById('guestbook-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const roleInput = document.getElementById('guest-role');
+            const authorInput = document.getElementById('guest-name');
+            const emojiInput = document.getElementById('guest-emoji');
+            const messageInput = document.getElementById('guest-message');const noteColors = ['rose', 'sky', 'purple'];
+            const randomColor = noteColors[guestbookEntries.length % noteColors.length];
+
+            const newEntry = {
+                id: Date.now(),
+                role: roleInput.value,
+                author: authorInput.value.trim(),
+                emoji: emojiInput.value,
+                message: messageInput.value.trim(),
+                color: randomColor,
+                date: "Vừa xong",
+                likes: 1
+            };
+
+            guestbookEntries.unshift(newEntry);
+            localStorage.setItem('quynh_duong_guestbook_v4', JSON.stringify(guestbookEntries));
+            renderGuestbook();
+
+            authorInput.value = '';
+            messageInput.value = '';
+            showToast('Đã gửi lưu bút của bạn lên trang của Quỳnh Dương!');
+        });
+
+        function likeGuestbookEntry(id) {
+            const entry = guestbookEntries.find(item => item.id === id);
+            if (entry) {
+                entry.likes = (entry.likes || 0) + 1;
+                localStorage.setItem('quynh_duong_guestbook_v4', JSON.stringify(guestbookEntries));
+                renderGuestbook();
+            }
+        }
+
+        // ==========================================
+        // 4. MODAL CHỈNH SỬA THÔNG TIN
+        // ==========================================
+        function openEditModal() {
+            tempUploadedAvatar = currentProfile.customAvatar || null;
+            updateModalAvatarPreview();
+
+            document.getElementById('input-name').value = currentProfile.name;
+            document.getElementById('input-role-badge').value = currentProfile.roleBadge;
+            document.getElementById('input-class').value = currentProfile.className;
+            document.getElementById('input-birthday').value = currentProfile.birthday;
+            document.getElementById('input-quote').value = currentProfile.quote;
+            document.getElementById('input-bio').value = currentProfile.bio;
+            document.getElementById('input-goal').value = currentProfile.goal;
+
+            const modal = document.getElementById('edit-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('edit-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function updateModalAvatarPreview() {
+            const previewImg = document.getElementById('preview-avatar');
+            const previewIcon = document.getElementById('preview-avatar-icon');
+            if (tempUploadedAvatar) {
+                previewImg.src = tempUploadedAvatar;
+                previewImg.classList.remove('hidden');
+                previewIcon.classList.add('hidden');
+            } else {
+                previewImg.classList.add('hidden');
+                previewIcon.classList.remove('hidden');}
+        }
+
+        function useDefaultSvgAvatar() {
+            tempUploadedAvatar = "";
+            document.getElementById('input-avatar-file').value = "";
+            updateModalAvatarPreview();
+            showToast('Đã chọn lại ảnh minh họa nữ sinh SVG!');
+        }
+
+        document.getElementById('input-avatar-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                tempUploadedAvatar = event.target.result;
+                updateModalAvatarPreview();
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function saveProfileChanges() {
+            const nameVal = document.getElementById('input-name').value.trim() || DEFAULT_PROFILE.name;
+            const classVal = document.getElementById('input-class').value.trim() || DEFAULT_PROFILE.className;
+            currentProfile = {
+                ...currentProfile,
+                name: nameVal,
+                roleBadge: document.getElementById('input-role-badge').value.trim() || DEFAULT_PROFILE.roleBadge,
+                className: classVal,
+                privacyClass: `${nameVal} • ${classVal}`,
+                birthday: document.getElementById('input-birthday').value.trim() || DEFAULT_PROFILE.birthday,
+                quote: document.getElementById('input-quote').value.trim() || DEFAULT_PROFILE.quote,
+                bio: document.getElementById('input-bio').value.trim() || DEFAULT_PROFILE.bio,
+                goal: document.getElementById('input-goal').value.trim() || DEFAULT_PROFILE.goal,
+                customAvatar: tempUploadedAvatar !== null ? tempUploadedAvatar : currentProfile.customAvatar
+            };
+
+            try {
+                localStorage.setItem('quynh_duong_complete_v4', JSON.stringify(currentProfile));
+                renderProfile();
+                closeEditModal();
+                showToast('Đã lưu thay đổi danh thiếp của Quỳnh Dương!');
+            } catch (err) {
+                showToast('Ảnh quá lớn để lưu bộ nhớ trình duyệt, vui lòng chọn ảnh nhẹ hơn!');
+            }
+        }
+
+        function resetDefaultData() {
+            currentProfile = { ...DEFAULT_PROFILE };
+            tempUploadedAvatar = null;
+            localStorage.removeItem('quynh_duong_complete_v4');
+            renderProfile();
+            closeEditModal();
+            showToast('Đã khôi phục thông tin mặc định!');
+        }
+
+        // ==========================================
+        // 5. TIỆN ÍCH: DARK MODE, COPY, SHARE, TOAST
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('portfolio_theme_complete');if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('portfolio_theme_complete', isDark ? 'dark' : 'light');
+            if (isDark) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        function copyText(elementId, successMsg) {
+            const text = document.getElementById(elementId).textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg);
+            } catch (err) {
+                showToast('Không thể sao chép tự động!');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function sharePortfolio() {
+            const shareText = `Kính chào thầy cô và các bạn! Ghé thăm Danh thiếp học sinh của ${currentProfile.name} (${currentProfile.className})`;
+            const textarea = document.createElement('textarea');
+            textarea.value = `${shareText} - ${window.location.href}`;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('Đã sao chép lời giới thiệu & liên kết trang web!');
+            } catch (err) {
+                showToast('Đã sẵn sàng chia sẻ danh thiếp!');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'px-4 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs sm:text-sm font-semibold shadow-xl flex items-center gap-2.5 transform transition-all duration-300 translate-y-2 opacity-0';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-rose-400 dark:text-rose-500"></i><span>${escapeHTML(message)}</span>`;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function escapeHTML(str) {
+            return String(str).replace(/[&<>"']/g, function(m) {
+                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderProfile();
+            renderGuestbook();
+        });
+    </script>
+  
+<!-- QR CODE CHUYỂN KHOẢN -->
+<section class="py-16 px-6 bg-slate-900 text-center">
+    <div class="max-w-xl mx-auto">
+
+        <h2 class="text-3xl font-bold text-white mb-3">
+            QR CODE CHUYỂN KHOẢN
+        </h2>
+
+        <p class="text-slate-300 mb-8">
+            Quét mã QR bên dưới để chuyển khoản
+        </p>
+
+        <div class="inline-block bg-white p-5 rounded-2xl shadow-xl">
+            <img
+                src="https://raw.githubusercontent.com/nguyenthanhdat201201000-max/danhthiepquynhduong/main/qr%20qd.jpg"
+                alt="Mã QR chuyển khoản"
+                class="w-56 h-56 object-contain mx-auto"
+            />
+        </div>
+
+        <p class="text-slate-400 text-sm mt-5">
+            Cảm ơn bạn đã ghé thăm website!
+        </p>
+
+    </div>
+</section>
+
+</body>
+</html>
